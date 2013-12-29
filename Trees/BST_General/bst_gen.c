@@ -32,6 +32,92 @@ void print_tree(struct node* root){
 	print_tree(root->right);	
 }
 
+/*
+Function which find the minimum most
+This goes to the lest most leaf
+*/
+struct node* findMin(struct node *root){
+	struct node *current = root;
+	while(current->left){
+		current = current->left;
+	}
+	return current;
+}
+
+
+struct node* delete(struct node* root, int data){
+	struct node *temp;
+
+	if(data < root->data)
+		root->left = delete(root->left, data);
+	else if(data > root->data)
+		root->right = delete(root->right, data);
+	else{
+	/* 
+	Key values are same.
+	There are three cases.
+	1. The node to be deleted has no children.
+	2. The node to be deleted has one children ( left or right )
+	3. The node to be deleted has two children
+	*/
+		if(root->left != NULL && root->right != NULL){
+			// Two children case
+			temp = findMin(root->right);
+			root->data = temp->data;
+			root->right = delete(root->right, temp->data);
+			/*
+			The node to be deleted: 4
+			-------------------------
+					7
+				       / \
+				      4   9
+				     / \
+				    3   5
+					 \
+					  6
+			Find Min: 5
+			Root: 4
+			Root->right = delete(root->right, 5)
+			*/
+			
+		}
+		else{
+			// One child case
+			temp = NULL;
+			temp = root->left ? root->left : root->right;
+			if(temp == NULL){
+			// No child case
+				temp = root;
+				root = NULL;
+			}
+			else{
+			/*
+			The node to be deleted: 5
+			-------------------------
+					7
+				       / \
+				      4   9
+				     / \
+				    3   5
+					 \
+					  6
+			Root: 5 
+			Temp: root->right 6
+			*root = *temp
+				We are copying the contents of node 6 to node 5. So whatever is the
+				tree following 6 will be replaced in 5. We will free node 6!!!!
+				This is important, as we are not free'ng node 5. In that case we need to
+				updated pointers in the parent node. 
+			*/
+				*root = *temp;
+			}
+			free(temp);
+		}
+	}
+//	if(root == NULL)
+		return root;
+}
+
 
 /*
 Function to check if two given trees are same.
@@ -214,11 +300,11 @@ int max_depth(struct node* root){
 
 int main(){
 	int n, no;
-	struct node *root;
-	root = (struct node*)malloc(sizeof(struct node));
+	struct node *root = NULL;
+/*	root = (struct node*)malloc(sizeof(struct node));
 	root->left = root->right = NULL;
 	root->data = 20;
-
+*/
 	printf("Enter the size of input: ");
 	scanf("%d",&n);
 	while(n--){
@@ -232,7 +318,13 @@ int main(){
 	printf("\n#################\n");
 	printf("\n#################");
 	printf("\nNo of nodes in the tree = %d \n",no_nodes(root));
+	printf("\n#################\n");
+	delete(root, 7);
 	printf("#################\n");
+	printf("Contents After deleting 7\n");
+	print_tree(root);
+	printf("\n#################\n");
+	printf("\n###############\n");
 	printf("\n#################\n");
 	printf("Looking for sum 41 %d\n",has_sum(root, 41));
 	print_all_paths(root, 0);
