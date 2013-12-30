@@ -1,0 +1,71 @@
+Every data type in C/C++ will have alignment requirement (infact it is mandated by processor architecture, not by language). A processor will have processing word length as that of data bus size. On a 32 bit machine, the processing word size will be 4 bytes.
+
+Historically memory is byte addressable and arranged sequentially. "If the memory is arranged as single bank of one byte width, the processor needs to issue 4 memory read cycles to fetch an integer. It is more economical to read all 4 bytes of integer in one memory cycle".
+
+
+Memory will be arranged as 4 banks.  BANK3 BANK2 BANK1 BANK0.
+
+If BANK0 occupies an address X, then BANK1, BANK2, BANK3 occupies addresses as (X+1), (X+2), (X+3).
+
+The processor can read 4 BANKS starting from BANK0 to BANK3 at once. Thus if an integer is located in BANK0, the processor can read the integer in one memory access (BANK0, BANK1, BANK2, BANK3).
+Instead, if the integer is located at BANK1, then the processor needs two memory fetches to read this data. 
+
+A double requires 8 bytes, and occupies two rows in the memory banks. Any misalignment of double will force more than two read cycles to fetch double data.
+a double variable will be allocated on 8 byte boundary on 32 bit machine and requires two memory read cycles. On a 64 bit machine, based on number of banks, double variable will be allocated on 8 byte boundary and requires only one memory read cycle. 
+
+The natural alignment of short int is 2 bytes. It means, a short int can be stored in bank 0 – bank 1 pair or bank 2 – bank 3 pair.
+
+typedef struct structb_tag
+{
+   short int   s;
+   char        c;
+   int         i;
+} structb_t;
+The padding added in this struct is 2 + 1 + 1 + 4 = 7 bytes. After the char, integer cannot be immediately allocated. Once char has been allocated, it will take 3 bytes and integer has to start on a 4 byte boundary. So 1 byte of padding is required. 
+
+
+// structure C
+typedef struct structc_tag
+{
+   char        c;
+   double      d;
+   int         s;
+} structc_t;
+The padding here is 1 + 7 + 8 + 4 = 20 bytes. But the size of the struct is 24 bytes. Lets us assume that we allocate member like this.
+structc_t array[3];
+Lets assume that struct size is 20 as opposed to 24 and the starting address is 0x0000. Now member array[0] will start at 0x0000 and member 1 array[1] will start at 0x0014 (i.e 20). 
+When member 1 starts at 0x14, the double variable in this member will start 8 bytes after the starting. i.e 20+8 = 28 ( becuase initial char + 7 bytes ). Now 28 is not 8 byte aligned. 
+In order to avoid such misaignment, compiler will introduce alignment requirement to every data structure. 
+				    ----------------------------------------------------------------------
+It will be as that of the largest member of the strcture. The size of the largest inner structure will be the alignment of the immediate larger structure. 
+Thus in structc_t, the compiler will add 4 bytes to the end. Thus the sizeof(structc_t) is 24 bytes. 
+
+
+Structure Packing
+-----------------
+	Some times it is mandatory to avoid padded bytes among the members of structure. For example, reading contents of ELF file header or BMP or JPEG file header. We need to define a structure similar to that of the header layout and map it. If the structure is allowed to be padded, then we cannot access the correct variables. 
+
+
+Why dereferencing a void pointer is not safe
+---------------------------------------------
+	// Deferencing a generic pointer (not safe)
+	// There is no guarantee that pGeneric is integer aligned
+	*(int *)pGeneric;
+
+	We cannot say that PGeneric is aligned in integer boundary. If the pointer pGeneric is not aligned as per the requirements of casted data type, there is possibility to get misaligned exception.
+
+
+Malloc returned pointer
+-----------------------
+	The pointer returned by malloc() is void *. It can be converted to any data type as per the need of programmer. The implementer of malloc() should return a pointer that is aligned to maximum size of primitive data types (those defined by compiler). It is usually aligned to 8 byte boundary on 32 bit machines. Since it can be typecasted to anytype, the address returned by malloc should be typecasted to the largest primitive data type size. ( i.e double )
+
+Alignment while passing data via stack
+--------------------------------------
+	 The compiler helps programmer in making proper alignment. For example, if a 16-bit value is pushed onto a 32-bit wide stack, the value is automatically padded with zeros out to 32 bits. Consider the following program.
+	void argument_alignment_check( char c1, char c2 ){
+   		// Considering downward stack
+   		// (on upward stack the output will be negative)
+   		printf("Displacement %d\n", (int)&c2 - (int)&c1);
+}
+
+The output will be 4 on a 32 bit machine. It is because each character occupies 4 bytes due to alignment requirements.
