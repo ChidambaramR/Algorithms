@@ -54,17 +54,6 @@ int FindMin(struct stack *s){
   return s->a[s->top];
 }
 
-
-int popS(struct stack *s1, struct stack *s2){
-   int val = pop(s1);
-   int val1;
-   if(val == FindMin(s2))
-	val1 = pop(s2);	
-
-   return val;	
-}
-
-
 void pushS(struct stack *s1, struct stack *s2, int data){
   
   /*
@@ -96,13 +85,8 @@ int main(){
     pushS(&s1, &s2, 25);
     pushS(&s1, &s2, 15);
     pushS(&s1, &s2, 8);
-    pushS(&s1, &s2, 1);
-    pushS(&s1, &s2, 45);
     pushS(&s1, &s2, 2);
-    popS(&s1, &s2);
-    popS(&s1, &s2);
-    popS(&s1, &s2);
- 
+    pushS(&s1, &s2, 45);
     printf("Min in O(1) time is %d\n",FindMin(&s2));
    return 0;
 }

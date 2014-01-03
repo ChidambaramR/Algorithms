@@ -1,0 +1,7 @@
+1. Are the two statements same? *ptr++ and ++*ptr?
+    No. *ptr++ increments the pointer alone and does not touch the value in it. 
+        ++*ptr incrmenets the value being pointed to by the pointer. This also can be done by (*ptr)++
+
+2. What is the equivalent pointer expression for a[i][j][k][l]?
+    *(*(*(*(a+i)+j)+k)+l)
+    'a' is the base address of the 4D array. 

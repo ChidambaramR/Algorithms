@@ -1,0 +1,87 @@
+Difference between Malloc and New
+==================================
+  1. New is an operator, but malloc is a function.
+  2. New returns the exact datatype but malloc returns a void *. i.e New returns a fully typed pointer. 
+  3. New calls the constructors but Malloc does not. 
+  4. New never returns NULL but will throw an exception
+  5. New returns memory from 'Free store' where as malloc returns from 'Heap'
+  6. New operator can be over-ridden while malloc cannot
+
+
+A program which will compile in C but not in C++
+=================================================
+Source: http://en.wikipedia.org/wiki/Compatibility_of_C_and_C++#Constructs_that_behave_differently_in_C_and_C.2B.2B
+
+
+1. A normal pointer, pointing to const variable is not allowed in C++
+----------------------------------------------------------------------
+  int main(){
+    int const j = 20;
+    int *ptr = &j; // A normal pointer points to const. In C++ it is an error.
+    return 0;
+  }
+  
+
+2. A void pointer cannot be explicitly assigned in C++
+-------------------------------------------------------
+  int main(){
+    void *vptr;
+    int *iptr = vptr; // Allowed in C, but not allows in C++
+    return 0;
+  }
+
+3. Operaotr new can be used in C as a variable, but not in C++
+---------------------------------------------------------------
+  int main(){
+    int new = 10; // Not allowed in C++
+  }
+
+
+A program which will give different output in C and C++
+========================================================
+
+1. Character literals are treated differently in C and C++
+------------------------------------------------------------
+  Character literals like 'a', 'b' are treated as integers in C whereas characters in C++.
+  
+  sizeof('a') will return 4 in C and 1 in C++
+
+2. Sizeof Boolean are different in C and C++
+---------------------------------------------
+  printf("%d",sizeof(1==1)) // Prints 4 in C
+  cout << sizeof(1==1)) // Prints 1 in C++
+
+
+Difference between Struct and Class
+====================================
+
+1. Members of class are private by default and members of struct are public by default
+---------------------------------------------------------------------------------------
+This does not work as the member is private by default in class
+class Test {
+    int x; // x is private
+};
+int main()
+{
+  Test t;
+  t.x = 20; // compiler error because x is private
+  getchar();
+  return 0;
+}
+
+This works because, the members are public in a struct by default.
+struct Test {
+    int x; // x is public
+};
+int main()
+{
+  Test t;
+  t.x = 20; // works fine because x is public
+  getchar();
+  return 0;
+}
+
+2. When deriving a class from class/struct the default access specifier is private.
+-----------------------------------------------------------------------------------
+class Derived : Base {}; // is equivalent to class Derived : private Base {};
+

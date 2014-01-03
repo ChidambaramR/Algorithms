@@ -25,6 +25,11 @@ Logic:
 	5. Parameter declarations which differ only by a const/volatile.	
 		Eg: int f(int x) {}
 		    int f(const int x) {}
+	   But function overloading will be allowed when a const reference/pointer is passed as an argument. The reason is, when just a const
+	   value is passed, there is no sense making overloading. We are just passing by value from main. So the changes in main will not be
+	   reflected. So there is no purpose of making function overload with const.
+           But const pointer can make a difference. Because, the changes in the pointer can be reflected in main. So function overload can be
+	   permitted depending on the value of const to a reference/pointer
 
 	6. Parameter declarations which differ only by default arguments.
 		Eg: int f(int a, int b=0) {}

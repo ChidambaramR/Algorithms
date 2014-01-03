@@ -1,0 +1,17 @@
+1. What is OOP
+	It is a technique to develop logical modules such as classes, that contain properties, methods, fields and events.
+	It is an approach to build modular software systems. The OOP system integrates code and data into an "object". 
+	It is an improvement over structured programming. It divides the system into modular objects which own their data 
+	   and are responsible for their own behavior. This feature is known as encapsulation. 
+	Concepts in OOPS:
+	Abstraction: It defines the essential characteristics of an object that distinguishes it from other kind of objects.
+	Encapsulation: Makes the object to have its own state and behavior. For example, "sqaure root" can be an object of 
+	   Math. Encapsulation enables this object to have not only its own function, but also its own data.
+	Inheritance: It defines the relationship between the classes where in one class shares the structure or behavior
+	   defined in another class. This is called singleton inheritance. If the class shares properties between multiple
+	   classes, then it is called multiple inheritance. 
+
+2. What is an object
+	Object is a software bundle of related state and behavior. An object has a state (data) and behavior (code). 
+	They correspond to real world things. For ex, a graphics program will have objects like circle, square etc.
+	A shopping system will have objects like shopping cart, customer, product. They are instances of classes. 

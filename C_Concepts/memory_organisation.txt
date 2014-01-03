@@ -1,0 +1,66 @@
+Objective:
+==========
+  Understand how memory is formatted for a statically and dynamically created multi-dimensional arrays. 
+
+Logic:
+======
+  A statically created 2D array is like an array of arrays. It is laid contiguously in memory. Arrays are not the same thing as pointers. 
+  int array1[2][2] = {{0, 1}, {2, 3}} in memory looks like
+  0 1 2 3
+  This is exactly same as array2[4] = {0, 1, 2, 3}
+
+  But if we pass array1 to the following function then bad things will happen and the compiler will give a warning. 
+  void fun(int **arr);
+  Thus 2D array is not same as **array. 
+
+  int somearray[4][2]
+  If we ask for memory like sometype_t array[4], then in memory it will look like
+  sometype_t | sometype_t | sometype_t | sometpye_t
+  i.e 4 sometype_t objects laid out next to each other in memory. 
+  So the somearray looks like this.
+  int[2] | int[2] | int[2] | int[2]
+  Now this expands to the following.
+  int | int | int | int | int | int | int | int
+
+  unsigned char MultiArray[5][2] = {{0,1}, {2,3}, {4,5}, {6,7} {8,9}}
+  In memory, this is equal to {0,1,2,3,4,5,6,7,8,9}
+
+  Given a flat memory model of a 2D array, the following formula can be used to find the position.
+  Addr = B + W(NoC*(i-Lc) + (j-Lc))
+  If Lc = Lower Column Bound = 0 (i.e 0 indexed),
+  NoC is the number of elements in the column
+  then Addr = B + W(NoC*i + j)
+  Consider the memory a[][] = {{1,2,3}, {4,5,6}, {7,8,9}}
+  Let B = Base addr = 200
+  Let W = Width = 4 (integer)
+  So Addr of a[1][2] i.e element 6 = 200 + 4(3*1 + 2) = 200 + 4(5) = 220
+  The logic behind the formula, skip the given number of rows and add the position of the element and multiply it by the width.
+    For skipping the number of rows, multiply the number of rows to be skipped and the number of elements in each column.
+
+  Given a 2D array like arr[3][3]
+  arr is the base address of the 2D array.
+  arr+1 goes to the 1st row in the array.
+  arr+2 goes to the 2nd row in the array.
+  arr, &arr[0] and &arr[0][0] are same. 
+  arr+1, &arr[1] and &arr[1][0] are same.
+  arr+2, &arr[2] and &arr[2][0] are same.
+  It is stored flat in memory as follows.
+  (gdb) x /10wx b
+    0x7fff44663230: 0x00000001      0x00000002      0x004003c3      0x00000004
+    0x7fff44663240: 0x00000005      0x00000006      0x00000007      0x00000008
+    0x7fff44663250: 0x00000009      0x00000000
+  The references are not stored anywhere. Only the contents. The compiler internally calculates the reference.
+
+
+  Given the following program and sizeof int = 2, and sizeof pointer 2, predict the output.
+  Base address = 1002
+  int a[3][4] = {
+                {1,2,3,4},
+                {5,6,7,8},
+                {9,10,11,12}
+                }
+  printf("%u %u %u",a[0]+1, *(a[0]+1), *(*(a+0) + 1))
+  The output is 1004, 2, 2
+  Reason: When we do a+1, then pointer goes to next row because a is a double pointer or a pointer to pointer. 
+  When we do a[0]+1, then pointer to next element in the column. Because a[0] is just a pointer to an integer and so
+    it increments by the sizeof pointer.
