@@ -14,15 +14,19 @@ void insert(struct node **root, int data){
 		struct node* temp = (struct node*)malloc(sizeof(struct node));
 		temp->data = data;
 		temp->right = temp->left = NULL;
-		temp->parent = (*root);
+		temp->parent = NULL;
 		(*root) = temp;
 		return;
 	}
 
-	if(data < (*root)->data)
+	if(data < (*root)->data){
 		insert(&((*root)->left), data);
-	else
+		(*root)->left->parent = (*root);
+	}
+	else{
 		insert(&((*root)->right), data);
+		(*root)->right->parent = (*root);
+	}
 }
 
 void print_tree(struct node *root){
