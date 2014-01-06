@@ -4,46 +4,55 @@
 struct node{
 	int data;
 	struct node* next;
-} *root = NULL;
+};
 
+/*
+This is similar to inserting a node at the begining of the list.
+It is just a different perspective of viewing the list.
 
+Example, if we push the following data into the stack (1,2,3,4,5)
+	the stack will look like NULL<-1<-2<-3<-4<-5 (top)
+	The TOP element will be pointing to 5.
+
+This list can also be viewed like following. 
+	(head/top)5->4->3->2->1->NULL
+	If we insert 1, then insert 2, the element will be added at the
+	begining of the list and 1 is pushed back.
+*/
 void push(struct node **top, int data){
 	struct node *temp;
 	
 	temp = (struct node*)malloc(sizeof(struct node));
-	temp->next = NULL;
 	temp->data = data;
 	
-	if((*top) == NULL){
-		root = temp;
-	}
-	else{
-		(*top)->next = temp;
+	/*
+	Stack is initially empty
+	*/
+	if(!(*top)){
+		temp->next = NULL;
+		*top = temp;
+		return;
 	}
 
-	(*top) = temp;
+	temp->next = *top;
+	*top = temp;
 }
 
 
-void display(struct node *root){
-	struct node *crawl = root;
-	while(crawl){
-		printf("%d ",crawl->data);
-		crawl = crawl->next;
+void display(struct node *top){
+	while(top){
+		printf("%d ",top->data);
+		top = top->next;
 	}
 }
 
 int pop(struct node **top){
 	int val = 0;
-	struct node *crawl = root;
+	struct node *elem = *top;
 
-	while(crawl->next != *top)
-		crawl = crawl->next;
-
-	val = (*top)->data;
-	*top = crawl;
-	(*top)->next = NULL;	
-	free(crawl->next);
+	val = elem->data;
+	*top = (*top)->next;
+	free(elem);
 
 	return val;
 }
@@ -69,7 +78,7 @@ int main(){
 				printf("Value = %d\n",val);
 				break;
 
-			case 3: display(root);
+			case 3: display(top);
 				break;
 
 			case 4: exit(0);
