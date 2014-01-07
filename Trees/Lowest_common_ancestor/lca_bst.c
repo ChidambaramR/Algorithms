@@ -28,6 +28,32 @@ void insert(struct node **root, int data){
 	}
 }
 
+/*
+This method can be applied to any binary tree. Not only binary search tree.
+This method is very efficient when applied to any binary trees. It tries to search
+for both the nodes. When one of the node is found, it starts returning the pointer
+to the node which was found. Similarly when other node is found it starts returning
+the pointer. The point where both left and right pointers are not null, we have found
+the root and we will return the pointer to that node. 
+*/
+struct node* lca_efficient(struct node *root, int n1, int n2){
+	struct node *left, *right;
+	
+	if(root == NULL)
+		return NULL;
+
+	if(root->data == n1 || root->data == n2)
+		return root;
+
+	left = lca_efficient(root->left, n1, n2);
+	right = lca_efficient(root->right, n1, n2);
+	
+	if(left && right)
+		return root;
+
+	return (left ? left : right );
+}
+
 
 struct node* lca(struct node *root, int n1, int n2){
 	if(root == NULL)
@@ -54,6 +80,9 @@ struct node* lca(struct node *root, int n1, int n2){
 	return root;
 }
 
+/*
+This method can be applied to any binary tree, given a parent pointer.
+*/
 struct node* lca_parent(struct node *nd1, struct node *nd2){
 	struct node *cur1 = nd1;
 	struct node *cur2 = nd2;
@@ -134,7 +163,7 @@ int main(){
 	n2 = search(root, nd2);
 	printf("%d %d\n",n1->data, n2->data);
 
-	lca_parent_node = lca_parent(n1, n2);
+	lca_parent_node = lca_efficient(root, nd1, nd2);
 	printf("LCA with parent = %d\n",lca_parent_node->data);
 	return 0;
 }
