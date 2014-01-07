@@ -5,3 +5,39 @@
 2. What is the equivalent pointer expression for a[i][j][k][l]?
     *(*(*(*(a+i)+j)+k)+l)
     'a' is the base address of the 4D array. 
+
+3. Struct Hack
+	This is used for creating variable sized structs. Mostly used in data packets. 
+	When we dont know the actual size of the data that will be received and we need a struct
+	to accomodate such a data packet, we can use this. It is usually defined as follows.
+	struct emp{
+		int id;
+		int name_len;
+		char name[0]; // Just a place holder
+	}
+	Sizeof this struct is 4+4+0 = 8 bytes
+	In gcc, when we create an array of zero length, it is considered as array of incomplete type that’s why gcc 
+	reports its size as “0″ bytes. This technique is known as “Stuct Hack”. 
+	When we create array of zero length inside structure, it must be (and only) last member of structure
+	
+	struct emp *e = malloc(sizeof(*e) + sizeof(char) * 128);  is equivalent to the structure
+        struct emp{
+                int id;
+                int name_len;
+                char name[128]; // In this case, 128 bytes is fixed. What if we dont know this size?
+        }
+
+	Alternatively we can use a char* instead. 
+        struct emp{
+                int id;
+                int name_len;
+                char *name; // A char pointer instead of name[0]
+        }
+	Disadvantages in this approach:
+	The memory allocated for name might not be contiguous.
+	We need to two malloc and two free calls. Programmers usually free the global emp memory but forget to free 
+		the memory pointed to by the char*. 
+
+	Thus to avoid all these confusions, we use the technique called struct hack
+
+	
