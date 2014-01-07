@@ -7,6 +7,7 @@
     'a' is the base address of the 4D array. 
 
 3. Struct Hack
+	Source: http://www.geeksforgeeks.org/struct-hack/
 	This is used for creating variable sized structs. Mostly used in data packets. 
 	When we dont know the actual size of the data that will be received and we need a struct
 	to accomodate such a data packet, we can use this. It is usually defined as follows.
