@@ -154,7 +154,7 @@ because, we need to tell the caller about the change in the value of the head.
 void delete_full(struct node **head){
 	struct node *cur = *head;
 	struct node *temp;
-	while(head){
+	while(cur){
 		temp = cur->next;
 		free(cur);
 		cur = temp;
