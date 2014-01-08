@@ -14,10 +14,10 @@ Logic:
  							             |
 							             5 ( temp )
 		
-		2. tail->next = temp                    1->2->3->4    NULL
-								 |    ^
-								 |    |
-								  --> 5
+		2. tail->next = temp                    1->2->3->4(tail)    NULL
+								 |           ^
+								 |           |
+								  -->-->-->->5
 
 		3. tail = temp                          1->2->3->4    NULL
 								 |    ^
