@@ -416,7 +416,18 @@ struct node* shuffleMerge(struct node *a, struct node *b){
 
 
 void reverse_LL(struct node **head){
+	struct node *back = NULL;
+	struct node *middle = *head;
+	struct node *front;
 
+	while(middle){
+		front = middle->next;
+		middle->next = back;
+		back = middle;
+		middle = front;
+	}
+
+	*head = back;
 }
 
 int main(){
@@ -441,6 +452,9 @@ int main(){
 		printf("Node to be deleted not found\n");
 	*/
 	display(newRef);
-	display(shuffleMerge(head, newRef));
+	head = shuffleMerge(head, newRef);
+	display(head);
+	reverse_LL(&head);
+	display(head);
 	return 0;
 }
