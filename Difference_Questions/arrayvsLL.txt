@@ -1,0 +1,66 @@
+Following are the differences between array and a linked list
+
+FOR LL
+======
+1. Linked Lists are flexible:
+   ---------------------------
+	1. A Linked list can be easily expanded. If we create 100 nodes and want more nodes, it can done in O(1) time.
+		i.e A LL is suitable for dynamic needs.
+	   An array cannot be expanded easily. If we had, we need to resize the array. So it is not suited for dynamic needs.
+		Expansion of an array when memory is fragmented cannot be possible. 
+
+	2. Linked list can store data of different size. Example, we have a LL to represent a page in the memory
+		along with the number of times it has been referenced. A page in memory is 4096 bytes and count need
+		not be more than 8 bytes.
+   	   The above scenario cannot be achieved with the help of an array.
+
+	3. Shuffling a LL can be easily done just by modifying the pointers.
+	   Shuffling an array requires lot of memory access and updation which makes it cache "unfriendly"
+
+2. Linked Lists have better run times in some scenarios:
+   -----------------------------------------------------
+	1. Linked List can achieve that O(1) insertion as arrays, just by have extra 4/8 bytes. Deleting a linked list
+		can also be faster compared to an array.
+	   If we delete a node somewhere in the middle of the array, we need to shift all things to resotre things back.
+
+	2. Merging two Linked Lists can be dont in O(1) time. Just update the next pointer of the last list.
+	   Merging an array takes O(n) time and lots of memory access.  
+
+3. Multi-threaded applications:
+-------------------------------
+	A LL fares well for a multi-threaded application. If a LL is shared among several threads and a thread wants to
+		updated any one node like ( remove / insert ) etc, a lock can be acquired only for that node or that 
+		portion of the list. In a same manner a read-only lock can allow the iterators to traverse the list. 
+	In an array any change which modifies the size of the array, requires the whole array to be locked.
+
+FOR ARRAY
+=========
+1. Arrays promote better access:
+--------------------------------
+	1. Arrays are cache friendly. If we declare an array of size 100, then the OS will read a block as whole
+		and put into the case. Thus reading 1st element will also bring the 99th element in the cache.
+		Accessing from the cache is 100 times faster than accessing from memory.
+	   LL exhibits poor locality of reference. They are scattered in memory. So if we need to read 100 nodes,
+		then memory access will be more in this case. This was also called something called read ahead penalty.
+		The OS might think the application would benefit from locality of reference and tries to do readahead
+		and pollutes the cache. Looking at a random access patter, the OS has to wipe every unuseful data from the
+		cache.
+
+	2. Arrays have random access. We can access 99th element after the 1st element.
+	   This cannot be done in LL. It has sequential access. 
+
+	3. Arrays do not need any extra memory for references. 
+	   A LL needs extra variables for reference the other nodes. 
+
+2. Less load on the processor:
+------------------------------
+	1. Since in most of the cases, the size of the array is fixed, most of the work is done during the compilation time.
+		So the processor has to put less effort during run time.
+	   For a LL, the processor has to spend much effort like, allocating a memory, swapping out a process because of idle time
+		then swap in a process and return the control to it. 
+
+3. Maintainablity:
+------------------
+	1. Applications which are built with arrays are easy to maintain and easy to debug. The programmers also make less errors
+		while writing sometihng with an array.
+	   A linked list causes lot of programming errors. 
