@@ -1,0 +1,30 @@
+The following are the differences between hash table and a binary search tree.
+
+1. A hash table has a worst case lookup time of O(1). 
+   A BST has a worst case look up time of O(n). But this happens only is a BST is skewed. On an
+	average case, a BST would return the result in log(n)
+
+2. A hash table would require more space than actually needed. For example, if we create a hash table
+	of size 100, it may be the case that only 20 of them is used and hence there is a wastage of
+	80 bytes of memory.
+   A BST creates only as many nodes it want. It doesnt waste any extra space. 
+
+3. When a hash table needs more room, it is difficult to expand. 
+   A BST can be expanded in O(1) time.
+
+4. A hash table is not an organized data strucutre. 
+   A BST is an organized DS. We can quickly print the elements in ascending order if situation demands.
+
+5. A BST can also be used to search for the "closest" key value. Example, if we are searching for key 10,
+ 	but there is only key 11, and if the application wanted such a key, a BST can be used.
+   A hash table cannot be used for the above purpose. It returns only if the key is found.
+
+6. Inserting into a hash table can be performance degrading based on the input hash function.
+	Time can be lost due to collision.
+   Inserting in a BST does not have that overhead.
+
+7. A hash table has a better cache behavior. Thus in a single read, almost all key value mappings can be
+	brought into the cache. Thus fetching time is extremely reduced.
+   A BST is not cache friendly. It can be allocated anywhere in the memory so much of cache cannot be used.
+
+ 
