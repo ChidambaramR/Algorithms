@@ -1,0 +1,13 @@
+Objective:
+==========
+	Difference between binary tree and a doubly linked list.
+
+Logic:
+======
+	Structurally, they both are same. It differs based on how we use the pointers. 
+	In a doubly linked list, a node can have atmost two pointers to it. i.e previous's next and next's previous.
+	This is not possible in a binary. It can have atmost one pointer to it. 
+
+	Traversal times can be greatly reduced in a binary tree in average case. To reach the leaf node, it only takes 
+	log n time. 
+	In DLL, there is no log n traversal unless the list is sorted (using binary search)
