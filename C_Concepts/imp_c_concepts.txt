@@ -7,6 +7,7 @@
     'a' is the base address of the 4D array. 
 
 3. Struct Hack
+---------------
 	Source: http://www.geeksforgeeks.org/struct-hack/
 	This is used for creating variable sized structs. Mostly used in data packets. 
 	When we dont know the actual size of the data that will be received and we need a struct
@@ -41,4 +42,18 @@
 
 	Thus to avoid all these confusions, we use the technique called struct hack
 
-	
+
+4. Const pointers and pointers to constants
+--------------------------------------------
+	This is how we should declare a pointer to a constant.
+	const char *p; // p is a pointer to a constant character. The value pointer by p cannot be changed
+	char * const p; // p is a constant pointer to a character. p cannot be changed.
+	Constant pointer:
+	------------------
+		int var1=0, var2=0;
+		int * const p = &var1;
+		p = var2; // Changing the pointer results in a compilation error
+	Pointer to a constant:
+	----------------------
+		const char *s = "hello";
+		++*s; // Changing the value pointed by s. 	
