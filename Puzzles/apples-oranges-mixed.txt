@@ -1,0 +1,15 @@
+Objective:
+==========
+	We have three covered baskets "Apples", "Oranges" and "Mixed". They are labelled incorrectly. Choosing only one fruit
+	from one of the packets, how can you determine how to relabel the packets.
+
+Logic:
+======
+	Always pick from the basket named "Mixed". 
+		If the picked fruit is "Apple", then the mixed is actually the apple basket. This is because the baskets
+		are labelled incorrectly and we have picked from mixed basket. So the label is correct, which means it is
+		an apple basked. The box named "Orange" is mixed because, it cannot be an "Apple" basket. 
+		
+		If the picked fruit is "Orange", then the basket is actually "Orange" basket. Since the boxes are labelled
+		incorrectly, there cannot be an orange fruit in the mixed basket unless it is an orange basked. The basket
+		named "Apple" is "Mixed" and the box named "Orange" is mixed

@@ -1,0 +1,15 @@
+Objective:
+==========
+	We have a gold bar with seven segments. For seven days we must pay an employe with one gold segment each day. 
+	Breaking the bar only twice, how can you ensure the employee gets paid appropriately.
+
+Logic:
+======
+	Break the bar twice such that we have 1 == 2-3 == 4-5-6-7
+	Day 1: Give the 1st segmet. We have 2-3 == 4-5-6-7
+	Day 2: Give 2-3 segment and get back the 1. We have 1 == 4-5-6-7
+	Day 3: Give the 1st segment. We have 4-5-6-7
+	Day 4: Give the 4-5-6-7 segment and get back 1 and 2-3. We have 1 == 2-3
+	Day 5: Give the 1st segment. We have 2-3
+	Day 6: Give the 2-3 segment and get back 1. We have 1
+	Day 7: Give the 1st segment and finish it off
