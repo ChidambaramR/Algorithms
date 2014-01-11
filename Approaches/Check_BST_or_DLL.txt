@@ -1,0 +1,52 @@
+Objective:
+==========
+	Given a pointer to a random node of type struct node{
+							struct node *left;
+							struct node *right;
+							int data;
+						 }
+	Determine if it is a Binary Tree or DLL
+
+Logic:
+======
+	To check for a binary tree, we need to make sure there is no cycles in the tree and both the pointers point to different locations
+	except for NULL case. Thus a node should not be visited twice in a binary tree. To ensure this, we can have a hashmap of all the
+	children visited. While visiting a new node, if the hash map for this node is already marked, then it means this is a cycle in the
+	binary tree. 
+	Also, each node in a binary tree has only one parent. 
+	bool isBT(struct node* p_node){
+		if(p_node == NULL)
+			return true;
+
+		// Check if node is visited
+		if(hash[p_node])
+			return false;
+
+		// Mark visited
+		hash[p_node] = true;
+
+		return isBT(p_node->left) && isBT(p_node->right);
+	}
+
+	To check for DLL, we need to see, if next pointer's previous pointer is the same node and the previous pointer's next pointer
+	is the same node.
+
+	bool isDLL(struct node* p_node){
+		if(p_node == NULL)
+			return true;
+
+		if(hash[p_node])
+			return false;
+
+		hash[p_node] = true;
+
+		// Conditions for DLL
+		if(p_node->next)
+			if(p_node>next->prev != p_node)
+				return false;
+		if(p_node->prev)
+			if(p_node->prev->next != p_node)
+				return false;
+
+		return isDLL(p_node->left) && isDLL(p_node->right);
+	}
