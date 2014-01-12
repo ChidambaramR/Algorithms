@@ -103,3 +103,30 @@
 	Generally, extern keyword specifies to the compiler that memory for the variable is allocated elsewhere and that
 	address is given to the current program at the time of linking. The linker will search if memory is allocated for
 	the variable in any other program. 
+
+7. Implement sizeof operator in C
+	#define my_sizeof(type) ((char*)(&type+1) - (char*)&type)
+	
+	If we dont use a char* here, then -(&type) will reduce four times (&type) if the type is an integer. Even if we give 
+	-1, it is going to reduce by 4 if it is an integer. So we typecast it to char*. Thus 
+	
+   	int a;
+	if my_sizeof(a);
+	
+	Let address of a is 100. my_sizeof(a) = ((char*)(100 + 1) - (char*)100)
+					      = ((char*)104 - (char*)100)
+					      = 4
+
+8. Offset of a member in struct
+	#define my_offset(type, e) (&((type *)0)->e)
+
+	struct abc {
+    		int a;
+    		int b;
+    		char c;
+    		char d;
+	};
+	This should be called as my_offset(struct abc, d);
+	This will work as the NULL address is typecasted to the structure. so 0 will be considered as the starting address of
+		the structure. When d is accessed, it adds the padding and go forward x bytes from 0. Thus d is found at 0+x.
+		The address of this is returned as x.
