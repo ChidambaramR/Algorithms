@@ -8,6 +8,6 @@ int main(){
   k++;
   printf("\n%f",*j);
   printf("\n %c", 7["Sundaram"]);
-  printf("\n%d %d",sizeof(NULL), sizeof(""));
+//  printf("\n%d %d",sizeof(NULL), sizeof(""));
   return 0;
 }
