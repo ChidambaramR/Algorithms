@@ -36,9 +36,31 @@ int missing_sum(int a[], int n){
     	return total;
 }
 
+int missing_sum_bsearch(int a[], int length){
+	int low = 0;
+	int high = length-1;
+	int mid = (low+high)/2;
+
+	while(low < high){
+		if((mid - low) != (a[mid] - a[low])){
+			if(mid - low == 1)
+				return a[mid]-1;
+			high = mid ;
+		}
+		else if((high-mid) != (a[high] - a[mid])){
+			if(high - mid == 1)
+				return a[mid]+1;
+			low = mid ;
+		}
+		mid = (high+low)/2;
+	}
+}
+
+
 int main(){
-	int a[]={1,2,3,4,5,7,8,9};
+	int a[]={1,2,3,4,5,6,8,9};
 	printf("Missing number: %d\n",missing_xor(a, 8));
 	printf("Missing number1: %d\n",missing_sum(a, 8));
+	printf("Missing number1: %d\n",missing_sum_bsearch(a, 8));
 	return 0;
 }
