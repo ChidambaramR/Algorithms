@@ -1,0 +1,56 @@
+Difference between process and threads
+
+1. Context of execution:
+   ---------------------
+   A process is an executing instance of a program. A thread is a lightweight process and executes within the context of the process. 
+
+2. Overhead:
+   ---------
+   The overhead associated with process is significantly higher compared to that of thread. 
+
+   Creation:
+   ---------
+	Creating a process(fork) is a heavy task as we need to allocat page tables for it, allocate resources for the process,
+	copy the contents of the existing task struct to the new process and executing (exec) is also heavy as we need to load
+	the new address space of the process.
+	Creating a thread is a very light process as it just involves allocating a new set of registers.
+
+   Context Switching
+   ------------------
+   	In the case of context switching, switching
+	a thread is a very light operation. It just involves saving the context and loading the new context. But changing a process is a
+	very costly operation. For instance, the OS has to refresh the page tables, invaidate the cache, swap out pages if necessary and
+	then load the new process. 
+
+3. Security:
+   ---------
+   Level of security is better in terms of process. Each process have their own address space and their own virtual memory. There is no
+	chance of a process corrupting the other process memory. But threads share the address space. So one thread can easily pollute
+	the stack of another thread.
+
+4. Communication:
+   --------------
+   Communicating between process is a significant task as it involves an IPC. Communicating between threads is as easy as writing into
+	a global variable.
+
+5. Synchronization:
+   ----------------
+   Threads have to carefully synchronized as they can have race conditions. Threads share the address space so one thread cannot update
+	an area of memory which is being read by another thread. This does not happen in the case of process. It cannot modify another
+	process's address space.
+
+6 . Parallelism:
+   ------------
+   A high degree of parallelism is achieved with threads. If the process contains only one thread, and if it pends on an operation,
+	then the entire process is blocked. In the case of threads, the thread which requested an I/O alone is blocked and the other
+	thread is scheduled.
+
+7. Practical Example:
+   ------------------
+   Running a microsoft word application creates a process. It has multiple threads, that is why we are able to issue a print command and
+ 	at the same time do other operations. If there we no threads, then after issuing a print command, the whole word application will
+	wait for the print process to complete. In this time, the user cannot do anyother task with the application.
+
+8. Executables:
+   ------------
+   Different threads in a process share the same executables. Different process have different executables. 

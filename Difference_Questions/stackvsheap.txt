@@ -1,0 +1,34 @@
+Difference between stack and heap
+
+1. Both stack and heap are separate memory sections in a process's address space. 
+
+2. Direction of growth:
+   --------------------
+   A typical stack grows downwards and a typical heap grows upwards. 
+
+3. Scope of allocation:
+   --------------------
+   Variables created on the stack goes out of scope and is automatically deallocated whereas variables created on the
+	heap should be manually deleted and will never fall out of scope.
+
+4. Means of allocation:
+   --------------------
+   Allocating memory in a stack is just defining the variable. Allocating memory in a heap is done through malloc in the case of
+	C and new in the case of C++. Deallocation is automatic in stack and should be done through free in the case of C and
+	delete in the case of C++.
+
+5. Fastness is allocating memory:
+   -------------------------------
+   Allocating memory in a stack is very fast. Allocating memory in a heap is considerably slow and may involve the process to be
+	put to sleep if the requested memory is not available or the program can crash. 
+
+6. In stack memory is pre-allocated. In heap memory is allocated on demand. 
+
+7. Multi-threaded program:
+   -----------------------
+   In a multi-threaded program, each thread will have its own stack. But all the threads will share the heap. Thus there has to be
+	co-ordination between the threads in order to access the memory allocated in heap. 
+
+8. Fragmentation:
+   --------------
+   Memory allocation in heap could have fragmentation issues where as memory allocated in stack does not have fragmentation issues.

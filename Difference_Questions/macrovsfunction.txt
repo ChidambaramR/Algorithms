@@ -1,0 +1,7 @@
+Difference between macros and function
+
+1. Macros are Pre-processed. It is useful when small code appears many times. Macros do not check for compilation errors. 
+   It is faster and no function calling overheads. It expands the size of executable.
+
+2. Functions are run time methods. It is processed by the compiler. Inline functions are only a request to the compiler
+   which can be ignored. Normal functions have run time overheads like pushing arguments in the stack
