@@ -57,3 +57,49 @@
 	----------------------
 		const char *s = "hello";
 		++*s; // Changing the value pointed by s. 	
+
+
+5. Difference between declaration and definition
+------------------------------------------------
+	Declaration of a variable/function simply declares that the variable/function exists somewhere in the memory but
+	memory is not allocated for them. It is important because the type of the variable/function is known. Thus when
+	a variable is declared, the program knows about the type of the variable. In the case of function the program
+	will know about the prototype. 
+	Definition of a variable/function allocates memory for the varaible/function. 
+	How will you declare a C variable without defining it.
+		Ans: extern int i;
+
+6. Extern keyword in C
+------------------------
+	Extern with functions:
+	-----------------------
+	By default, the declaration and definition of a C function have 'extern' prepended with them. i.e Eventhough we dont use
+	extern with the declaration/definition of functions, it is present. For ex,
+	when we write, 
+		int foo(int arg1, char arg2);
+	the compiler treats them as 
+		extern int foo(int arg1, char arg2);
+	The extern keyword extends the visibility to the whole program. The function can be used from any of the files, provided
+		the declaration is known. By seeing the declaration of the functions, the C compiler thinks that the function
+		exists and it goes ahead to compile the program. 
+
+	Extern with variables:
+	----------------------
+	We can declare the variables without defining it by using extern int var;
+	When writing the definition of a function, extern is prepended by defualt. But for variables it is not. 
+	
+	// Compilation error - var is declared but not defined anywhere
+	extern int var;
+	void main(){
+		return 0;
+	}
+
+	// Works!
+	extern int var = 0; // When declaration has also has an assignment, then the variable is actually defined.
+	void main(){
+		return 0;
+	}
+
+	Generally, extern keyword specifies to the compiler that memory for the variable is allocated elsewhere and that
+	address is given to the current program at the time of linking. The linker will search if memory is allocated for
+	the variable in any other program. 
