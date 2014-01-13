@@ -1,0 +1,36 @@
+Difference between shallow copy and deep copy
+
+1. Shallow copy replicates as little as possible. A shallow copy of a collection of elements is a copy of the collection
+ 	structure and not the contents. With shallow copy two collections share the same individual elements. 
+   Deep copy duplicates everything. A deep copy of a collection is two collections with all of the elements in the
+	original collection duplicated. 
+
+   In short, in a shallow copy, object B points to object A's location in memory. In deep copy, all things in object A's memory 
+	location get copied to object B's memory location.
+
+   class String{
+	int data;
+	char *s;
+   };
+
+   String s1("Ace"); // s1.size = 3, s1.data = 0x0000F000
+   s2 = shallowCopy(s1);
+	// s2.size = 3, s2.data = 0x0000F000 ( note the same address as s1.data)
+
+   s3 = deepCopy(s2);
+	// s3.size = 3, s3.data = 0x0000F00F ( the address has changed. The new address has "Ace" copied in it.
+
+
+   Another example
+	struct Test {
+		char * ptr;
+	};
+
+	void shallow_copy(Test & src, Test & dest) {
+		dest.ptr = src.ptr;
+	}
+
+	void deep_copy(Test &src, Test &dest){
+		dest.ptr = malloc(strlen(src.ptr) + 1);
+		memcpy(dest.ptr, src.ptr);
+	}
