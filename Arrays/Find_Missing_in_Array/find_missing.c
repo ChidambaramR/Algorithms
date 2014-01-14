@@ -56,11 +56,39 @@ int missing_sum_bsearch(int a[], int length){
 	}
 }
 
+int missing_sum_bsearch_rec(int a[], int low, int high){
+	if(low > high){
+		printf("Elements are in sorted order only\n");
+		return -1;
+	}
+	
+	int mid = (low+high)/2;
+
+	if((mid-low) != (a[mid]-a[low])){
+		if(mid-low == 1)
+			return a[mid]-1;
+		missing_sum_bsearch_rec(a, low, mid);
+	}
+	else if(high-mid != (a[high]-a[mid])){
+		if(high-mid == 1)
+			return a[mid]+1;
+		missing_sum_bsearch_rec(a, mid, high);	
+	}
+	else{
+		/*
+		If the difference in the indexes are same, then possibly,
+		the array is in sorted order.
+		*/
+		printf("All elements are in sorted order\n");
+		return -1;
+	}
+		
+}
 
 int main(){
-	int a[]={1,2,3,4,5,6,8,9};
-	printf("Missing number: %d\n",missing_xor(a, 8));
-	printf("Missing number1: %d\n",missing_sum(a, 8));
-	printf("Missing number1: %d\n",missing_sum_bsearch(a, 8));
+	int a[]={1,2,3,4,5,6,7,8,9};
+//	printf("Missing number: %d\n",missing_xor(a, 8));
+//	printf("Missing number1: %d\n",missing_sum(a, 8));
+	printf("Missing number1: %d\n",missing_sum_bsearch_rec(a, 0, 8));
 	return 0;
 }
