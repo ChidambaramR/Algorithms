@@ -137,7 +137,7 @@ bool remove_node(struct node **head, int data){
 			*/
 			del = temp->next;
 			temp->next = temp->next->next;
-			free(temp);
+			free(del);
 			flag = true;
 		}
 		temp = temp->next;
@@ -171,7 +171,7 @@ int main(){
 	}
 
 
-	if(remove_node(&head, 10)){
+	if(remove_node(&head, 40)){
 		printf("\nNode deleted successfuly\n");
 		display(head);
 	}
