@@ -88,6 +88,14 @@ bool remove_occurences(struct node **pHead, int data){
 	}
 
 	/*
+	Re-initializing as, if the head element actually matched the element to be
+	deleted, then the above code modifies the head node. But our 'head' pointer
+	will become stale and pointing to some other location. Hence we are re-initializing
+	it
+	*/
+	head = *pHead;
+
+	/*
 	The 1st element is not the element to deleted.
 	*/
 	while(head->next){
