@@ -1,0 +1,11 @@
+Zombie process:
+===============
+	When a program forks a child and the child completes before the parent, the kernel still keeps some information
+	about the child in the case its parent needs it (wait system call)
+	The interval between the child terminating and the parent calling wait, the child is said to be in a 'zombie'.
+	ps lists the process state as Z. 
+	Eventhough it is not running, it takes up an entry in the process table. It consumes no other resources. 
+	To prevent a process from the entering the zombie state, the parent should call wait / waitpid for every child. 
+
+	If the parent dies before collecting the status of the child, then the child becomes an orphaned process and is
+	reaped by the init process. The init is the 1st process to be loaded after the system boots.
