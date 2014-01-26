@@ -1,0 +1,25 @@
+Objective:
+==========
+	An array of integers is given such that it is first ascending and then descending. 
+	Find index of some given integer in that array. Ex. 2,4,6,8,7,5,4,3. Input: 4. Output: 2, 7.
+
+
+Logic:
+======
+	The algorithm consists of three steps.
+	1. Find the pivot element. i.e the element at which the list starts descending. O(logn)
+	2. Do a binary search in the left side of the array to find the index. O(logn)
+	3. Do a binary search in the right side of the array to find the index. O(logn)
+
+	Step1:
+	------
+        This can be done by a binary search. The idea is that, if the middle element is greater than the element in the leftmost, then it means
+	that the pivot element is somewhere in the range {middle+1, right}. 
+	If the middle element is lesser than the leftmost element then the miniumum element will be in the range {left, middle-1}.
+        
+	18,19,20,25,12,9,8,7
+	In the above example, the middle element is 25 and is greater than the leftmost element. 
+	So it is in the range {middle+1, right}, i.e it is in the range {12, ..., 7}. 
+	In this new list, middle element is 9 and is lesser than the leftmost element. So the minimum element is in the range {left, middle-1}.
+	Thus the pivot element is found to be 12.
+
