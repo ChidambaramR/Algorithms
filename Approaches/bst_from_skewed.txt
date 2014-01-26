@@ -1,0 +1,21 @@
+Objective:
+==========
+	You are given a sorted skewed binary tree. How can you create a binary search tree of minimum height from it?
+
+Logic:
+======
+	With using extra space
+	----------------------
+		By using extra space, we can do an in-order traversal and write the elements to the array. After that
+		use binary search to find the middle element of the array and make it root. Use this recursively on the
+		left sub-tree and right sub-tree and create the left child and right child for the root. Make this the 
+		root and proceed.
+		An optimization in this approach is to just find the middle element of the left sub-tree and right sub tree
+		by calculating mid by length/2. 
+
+	Without using extra space
+	-------------------------
+		We can run a recursive appraoch and start rotations whenever height of the tree is not balanced.
+		The criteria for rotations is that, we should calculate the height of the left subtree and the height of the
+		right sub tree and find the difference. If the difference is greater than 2 then, do a left / right rotation.
+		Do this recursively till the root.
