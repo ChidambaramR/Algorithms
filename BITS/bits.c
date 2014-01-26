@@ -49,7 +49,7 @@ int copyLSB_mine(int x){
 
 
 int copyLSB(int x){
-	return ((1<<31)>>31);
+	return ((x<<31)>>31);
 }
 
 
@@ -194,7 +194,15 @@ int swap_odd_even(unsigned int x){
 	return ((even>>1) | (odd<<1));
 }
 
+int left_rotate(unsigned char a, int no){
+	// no - number of times to rotate
+	printf("%d\n", ((a << no) | (a >> (8-no))));
+	return 0;
+}
+
 int main(){
-	printf("Convert: %d",swap_odd_even(58));
+	unsigned char a = 'A';
+	printf("Convert: %d\n",swap_odd_even(58));
+	printf("A after rotation in decimal = %d\n",left_rotate(a,2));
 	return 0;
 }

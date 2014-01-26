@@ -35,3 +35,6 @@ Fork:
 	   * pending signals initialized to the empty set
 	   * timers created by timer_create not inherited
 	   * asynchronous input or output operations not inherited
+
+When a process forks, all open file descriptors are also inherited. i.e a separate copy is put in the child process. So even if the child closes tht socket it is not reflected to the parent. Only the reference count of the open socket descriptors is decremented. The socket will be removed only if the reference count becomes 0. 
+
