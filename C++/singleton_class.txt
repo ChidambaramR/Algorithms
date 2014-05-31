@@ -1,0 +1,20 @@
+Objective:
+==========
+	Code a singleton class
+
+Logic:
+======
+	A singleton class is one, for which only one object can be instantiated. To enable this, the constructor of the class should be
+	made private. 
+	class Singleton{
+		 private static Singleton instance;
+		 prinvate Singleton(){
+			// Private constructor 
+		 }
+	
+		public static synchronized Singleton getInstance(){
+			if(instance == null) // If new, create an instance
+				instance = new Singleton();
+			return instance;
+		}
+	}

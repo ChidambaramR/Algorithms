@@ -87,7 +87,7 @@ int missing_sum_bsearch_rec(int a[], int low, int high){
 
 int main(){
 	int a[]={1,2,3,4,5,6,7,8,9};
-//	printf("Missing number: %d\n",missing_xor(a, 8));
+	printf("Missing number: %d\n",missing_xor(a, 9));
 //	printf("Missing number1: %d\n",missing_sum(a, 8));
 	printf("Missing number1: %d\n",missing_sum_bsearch_rec(a, 0, 8));
 	return 0;
