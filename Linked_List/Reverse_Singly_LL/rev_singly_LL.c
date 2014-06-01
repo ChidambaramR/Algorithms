@@ -9,13 +9,18 @@ struct node{
 	struct node* next;
 };
 
-void push(struct node *head, int data){
+void push(struct node **head, int data){
 	struct node *crawl, *temp;
 	temp = (struct node*)malloc(sizeof(struct node));
 	temp->next = NULL;
 	temp->data = data;
 
-	crawl = head;
+        if(!(*head)){
+          *head = temp;
+          return;
+        }
+
+	crawl = *head;
 	while(crawl->next)
 		crawl = crawl->next;
 
@@ -26,7 +31,10 @@ void print(struct node*head){
   	struct node* crawl = head;
   	int i=1;
   	while(crawl){
-    		printf("Node %d: %d  ",i++,crawl->data);
+                if(crawl->next)
+    		  printf("%d -> ",crawl->data);
+                else  
+                  printf("%d",crawl->data);
     		crawl = crawl->next;
   	}
 }
@@ -45,24 +53,22 @@ void iter_rev_LL(struct node** head){
 }
 
 
-void rev_LL(struct node **head){
+struct node* rev_LL(struct node *head){
 	struct node *first, *rest;
 	
-	if(*head == NULL)
-		return ;
+	if(head == NULL)
+		return NULL;
 
-	first = *head;
-	rest = (*head)->next;
+	first = head;
+	rest = head->next;
 	
 	if(rest == NULL){
-		new_head = first; 
-		return;
+		return head; // new head of the linked list
 	}
-	printf("head before rev_LL for node %d is %p\n",first->data, *head);
-	rev_LL(&rest);
-	printf("head after rev_LL for node %d is %p\n",first->data, *head);
-	first->next->next = first;
-	first->next = NULL;		
+	head = rev_LL(rest);
+	rest->next = first;
+	first->next = NULL;
+        return head;
 
 }
 
@@ -70,17 +76,17 @@ int main(){
   	int n,data;
   	int i=1;
   	struct node* head, *mid;
-  	head = (struct node*)malloc(sizeof(struct node));
-  	head->next = NULL;
   	printf("Enter the number of nodes: ");
   	scanf("%d",&n);
   	while(n--){
   		printf("Enter node %d: ",i++);
   		scanf("%d",&data);
-  		push(head, data);
+  		push(&head, data);
   	}
-	iter_rev_LL(&head);
-	printf("After reversing LL\n");
 	print(head);
+        printf("\n");
+	head = rev_LL(head);
+	print(head);
+        printf("\n");
 	return 0;
 }
