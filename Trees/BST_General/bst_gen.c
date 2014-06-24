@@ -37,11 +37,10 @@ Function which find the minimum most
 This goes to the lest most leaf
 */
 struct node* findMin(struct node *root){
-	struct node *current = root;
-	while(current->left){
-		current = current->left;
-	}
-	return current;
+        if(!(root->left))
+            return root;
+
+        return findMin(root->left);
 }
 
 
@@ -319,7 +318,11 @@ int main(){
 	printf("\n#################");
 	printf("\nNo of nodes in the tree = %d \n",no_nodes(root));
 	printf("\n#################\n");
-	delete(root, 7);
+	printf("\n#################\n");
+	printf("\n#################");
+	printf("\nMinimum node in the tree = %d \n",(findMin(root)->data));
+	printf("\n#################\n");
+	/*delete(root, 7);
 	printf("#################\n");
 	printf("Contents After deleting 7\n");
 	print_tree(root);
@@ -339,5 +342,6 @@ int main(){
 	double_BST(root);
 	print_tree(root);
 	printf("\n#################\n");
-	return 0;
+	*/
+        return 0;
 }
