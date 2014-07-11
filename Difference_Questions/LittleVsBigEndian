@@ -1,0 +1,22 @@
+Difference between little endian and big endian
+
+They are just different in the way they are interpreted. 
+Intel uses little endian
+PowerPC uses big endian
+Little endian is easy for the processors to read data. The least significatn byte goes into lower address.
+When moving from a 32 bit machine to 64 bit machine, little endian is easier because we can easily add 0's to the starting.
+i.e in a 32 bit little endian machine, number 87888990 is representes as follows
+0x100 90
+0x101 89
+0x102 88
+0x103 87
+
+Same number is big endian machine is
+0x100 87
+0x101 88
+0x102 89
+0x103 90
+
+
+Now if we move to 64 bit, little endian is just appending 00's to rest of 4 bytes. But in big endian we need to move the bytes
+This is a little bit overhead
