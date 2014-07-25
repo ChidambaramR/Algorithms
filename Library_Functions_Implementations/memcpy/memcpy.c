@@ -12,18 +12,19 @@ void my_memcpy(void *dst, void *src, int len){
 		((unsigned char*)dst)[i] = ((unsigned char*)src)[i];
 }
 
-void my_memcpyBits(void *dst, void *src, int numBits){
-	int numBytes = numBits/8;
+void memcpy_bits(void *dst, void *src, int len)
+{
+	int bits_left = len % 8;
+	int bytes = len / 8;
+	unsigned char mask, temp;
 	
-	my_memcpy(dst, src, numBytes);
-
-	dst = (void*)((unsigned char*)dst + numBytes); 
-	src = (void*)((unsigned char*)src + numBytes); 
-
-	// Now dst and source have been moved till the bytes copied. We have to copy the bits
-	int bitsLeft = numBits % 8;
-	int mask = (1 << (numBits +1))-1;
-	dst = (void*)(((*(unsigned char*)src & mask) | (*(unsigned char*)dst & (~mask))));
+	my_memcpy(dst, src, bytes);
+	dst = dst + bytes;
+	src = src + bytes;
+	mask = ((1 << bits_left) -1);
+	mask = mask << (8 - bits_left);
+	temp = *src & mask;
+	*dst = temp;
 }
 
 int main(){
